@@ -1,7 +1,11 @@
+/// <reference path="./env.d.ts" />
+
 import { defineConfig } from 'vitepress'
+import type { DefaultTheme } from 'vitepress/theme'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 
 export default withMermaid(defineConfig({
+  base: process.env.VITEPRESS_BASE || '/',
   title: 'Velaris',
   description: 'Capability-driven testing framework',
   lang: 'en-US',
@@ -29,7 +33,7 @@ export default withMermaid(defineConfig({
   },
 
   themeConfig: {
-    logo: { text: 'Velaris' },
+    logo: { text: 'Velaris' } as unknown as DefaultTheme.ThemeableImage,
 
     nav: [
       { text: 'Getting Started', link: '/getting-started/', activeMatch: '/getting-started/' },

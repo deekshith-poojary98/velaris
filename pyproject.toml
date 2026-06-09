@@ -5,11 +5,31 @@ description = "Capability-driven test runner (monorepo workspace)"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
+authors = [
+    { name = "Deekshith Poojary", email = "deekshithpoojary355@gmail.com" },
+]
+keywords = ["velaris", "testing", "cli", "capabilities", "integration-testing", "test-runner"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Repository = "https://github.com/deekshith-poojary98/velaris"
 
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
     "responses>=0.25",
+    "ruff",
+    "build",
 ]
 
 [tool.pytest.ini_options]
@@ -21,3 +41,5 @@ pythonpath = [
     "packages/velaris-contracts",
     "packages/velaris-core",
 ]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]

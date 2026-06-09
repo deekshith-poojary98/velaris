@@ -12,7 +12,7 @@ import responses
 
 from velaris_core.events import RunFinished
 from velaris_core.json_reporter import JsonReporter
-from velaris_core.reporting import Reporter, multiplex, unwrap_envelope
+from velaris_core.reporting import multiplex, unwrap_envelope
 from velaris_core.output_mode import OutputMode
 from velaris_core.runner import run
 from velaris_core.stdout_reporter import StdoutReporter

@@ -7,7 +7,6 @@ import json
 from contextlib import redirect_stdout
 from pathlib import Path
 
-import pytest
 
 from velaris_core.bootstrap import register_builtin_providers
 from velaris_core.providers_browser import FakeBrowser, create_fake_browser

@@ -1,6 +1,5 @@
 """Reference provider tests."""
 
-import os
 
 import pytest
 

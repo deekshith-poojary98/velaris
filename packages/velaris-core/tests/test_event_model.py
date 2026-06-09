@@ -2,12 +2,9 @@
 
 from __future__ import annotations
 
-import io
 import json
-from contextlib import redirect_stdout
 from pathlib import Path
 
-import pytest
 
 from velaris_core.events import CapabilityObserved, EventEnvelope, TestStarted
 from velaris_core.reporting import event_to_dict, unwrap_envelope
