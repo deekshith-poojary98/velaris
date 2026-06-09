@@ -1,0 +1,9 @@
+{"test": "test_login", "name": "test_login", "type": "TestStarted"}
+{"test": "test_login", "capability": "browser", "provider": "fake", "type": "CapabilityResolved"}
+{"test": "test_login", "action": "open", "capability": "browser", "data": {"path": "/login"}, "type": "CapabilityObserved"}
+{"test": "test_login", "action": "type", "capability": "browser", "data": {"path": "#username", "text": "demo"}, "type": "CapabilityObserved"}
+{"test": "test_login", "action": "click", "capability": "browser", "data": {"path": "#submit"}, "type": "CapabilityObserved"}
+{"test": "test_login", "name": "test_login", "type": "TestPassed"}
+{"test": "test_login", "action": "close", "capability": "browser", "data": {}, "type": "CapabilityObserved"}
+{"test": "test_login", "capability": "browser", "type": "CapabilityTeardown"}
+{"test": null, "duration_seconds": 0.01, "failed": 0, "passed": 1, "type": "RunFinished"}

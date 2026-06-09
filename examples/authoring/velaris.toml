@@ -1,0 +1,8 @@
+[capabilities.random]
+provider = "seeded"
+
+[capabilities.random.options]
+seed = 42
+
+[capabilities.browser]
+provider = "fake"

@@ -1,0 +1,72 @@
+{"type": "TestStarted", "test": "test_user_login", "name": "test_user_login"}
+{"type": "CapabilityResolved", "test": "test_user_login", "capability": "browser", "provider": "fake"}
+{"type": "CapabilityObserved", "test": "test_user_login", "capability": "browser", "action": "open", "data": {"path": "/login"}}
+{"type": "CapabilityObserved", "test": "test_user_login", "capability": "browser", "action": "type", "data": {"path": "#username", "text": "demo"}}
+{"type": "CapabilityObserved", "test": "test_user_login", "capability": "browser", "action": "click", "data": {"path": "#submit"}}
+{"type": "TestPassed", "test": "test_user_login", "name": "test_user_login"}
+{"type": "CapabilityObserved", "test": "test_user_login", "capability": "browser", "action": "close", "data": {}}
+{"type": "CapabilityTeardown", "test": "test_user_login", "capability": "browser"}
+{"type": "TestStarted", "test": "test_checkout_total", "name": "test_checkout_total"}
+{"type": "CapabilityResolved", "test": "test_checkout_total", "capability": "api", "provider": "requests"}
+{"type": "CapabilityObserved", "test": "test_checkout_total", "capability": "api", "action": "get", "data": {"path": "/cart", "status_code": 200}}
+{"type": "CapabilityObserved", "test": "test_checkout_total", "capability": "api", "action": "post", "data": {"path": "/checkout", "status_code": 500}}
+{"type": "TestFailed", "test": "test_checkout_total", "name": "test_checkout_total", "error_type": "AssertionError", "message": "expected status 200 but got 500\n  assert response.status_code == 200"}
+{"type": "CapabilityTeardown", "test": "test_checkout_total", "capability": "api"}
+{"type": "TestStarted", "test": "test_fetch_users", "name": "test_fetch_users"}
+{"type": "CapabilityResolved", "test": "test_fetch_users", "capability": "api", "provider": "requests"}
+{"type": "CapabilityObserved", "test": "test_fetch_users", "capability": "api", "action": "get", "data": {"path": "/users", "status_code": 200}}
+{"type": "TestPassed", "test": "test_fetch_users", "name": "test_fetch_users"}
+{"type": "CapabilityTeardown", "test": "test_fetch_users", "capability": "api"}
+{"type": "TestStarted", "test": "test_seeded_random", "name": "test_seeded_random"}
+{"type": "CapabilityResolved", "test": "test_seeded_random", "capability": "random", "provider": "seeded"}
+{"type": "CapabilityObserved", "test": "test_seeded_random", "capability": "random", "action": "number", "data": {"minimum": 1, "maximum": 100, "value": 42}}
+{"type": "TestPassed", "test": "test_seeded_random", "name": "test_seeded_random"}
+{"type": "CapabilityTeardown", "test": "test_seeded_random", "capability": "random"}
+{"type": "TestStarted", "test": "test_database_insert", "name": "test_database_insert"}
+{"type": "CapabilityResolved", "test": "test_database_insert", "capability": "database", "provider": "memory"}
+{"type": "CapabilityObserved", "test": "test_database_insert", "capability": "database", "action": "insert_row", "data": {"table": "users", "key": "alice"}}
+{"type": "CapabilityObserved", "test": "test_database_insert", "capability": "database", "action": "get_row", "data": {"table": "users", "key": "alice", "found": true}}
+{"type": "TestPassed", "test": "test_database_insert", "name": "test_database_insert"}
+{"type": "CapabilityTeardown", "test": "test_database_insert", "capability": "database"}
+{"type": "TestStarted", "test": "test_missing_secret", "name": "test_missing_secret"}
+{"type": "CapabilityResolved", "test": "test_missing_secret", "capability": "secrets", "provider": "env"}
+{"type": "TestFailed", "test": "test_missing_secret", "name": "test_missing_secret", "error_type": "KeyError", "message": "secret 'API_TOKEN' not found in environment"}
+{"type": "CapabilityTeardown", "test": "test_missing_secret", "capability": "secrets"}
+{"type": "TestStarted", "test": "test_write_file", "name": "test_write_file"}
+{"type": "CapabilityResolved", "test": "test_write_file", "capability": "filesystem", "provider": "memory"}
+{"type": "CapabilityObserved", "test": "test_write_file", "capability": "filesystem", "action": "write_text", "data": {"path": "/tmp/out.txt", "bytes": 12}}
+{"type": "CapabilityObserved", "test": "test_write_file", "capability": "filesystem", "action": "read_text", "data": {"path": "/tmp/out.txt", "bytes": 12}}
+{"type": "TestPassed", "test": "test_write_file", "name": "test_write_file"}
+{"type": "CapabilityTeardown", "test": "test_write_file", "capability": "filesystem"}
+{"type": "TestStarted", "test": "test_timeout_search", "name": "test_timeout_search"}
+{"type": "CapabilityResolved", "test": "test_timeout_search", "capability": "browser", "provider": "fake"}
+{"type": "CapabilityObserved", "test": "test_timeout_search", "capability": "browser", "action": "open", "data": {"path": "/search"}}
+{"type": "TestFailed", "test": "test_timeout_search", "name": "test_timeout_search", "error_type": "TimeoutError", "message": "element '#results' not visible after 5000ms"}
+{"type": "CapabilityTeardown", "test": "test_timeout_search", "capability": "browser"}
+{"type": "TestStarted", "test": "test_compose_multi_capability", "name": "test_compose_multi_capability"}
+{"type": "CapabilityResolved", "test": "test_compose_multi_capability", "capability": "database", "provider": "memory"}
+{"type": "CapabilityResolved", "test": "test_compose_multi_capability", "capability": "filesystem", "provider": "memory"}
+{"type": "CapabilityResolved", "test": "test_compose_multi_capability", "capability": "random", "provider": "seeded"}
+{"type": "CapabilityObserved", "test": "test_compose_multi_capability", "capability": "random", "action": "number", "data": {"minimum": 1000, "maximum": 9999, "value": 2824}}
+{"type": "CapabilityObserved", "test": "test_compose_multi_capability", "capability": "database", "action": "insert_row", "data": {"table": "sessions", "key": "2824"}}
+{"type": "CapabilityObserved", "test": "test_compose_multi_capability", "capability": "filesystem", "action": "write_text", "data": {"path": "/sessions/2824.json", "bytes": 14}}
+{"type": "TestPassed", "test": "test_compose_multi_capability", "name": "test_compose_multi_capability"}
+{"type": "CapabilityTeardown", "test": "test_compose_multi_capability", "capability": "random"}
+{"type": "CapabilityTeardown", "test": "test_compose_multi_capability", "capability": "filesystem"}
+{"type": "CapabilityTeardown", "test": "test_compose_multi_capability", "capability": "database"}
+{"type": "TestStarted", "test": "test_invalid_payload", "name": "test_invalid_payload"}
+{"type": "CapabilityResolved", "test": "test_invalid_payload", "capability": "api", "provider": "requests"}
+{"type": "CapabilityObserved", "test": "test_invalid_payload", "capability": "api", "action": "post", "data": {"path": "/orders", "status_code": 422}}
+{"type": "TestFailed", "test": "test_invalid_payload", "name": "test_invalid_payload", "error_type": "ValidationError", "message": "field 'quantity' must be a positive integer, got -1"}
+{"type": "CapabilityTeardown", "test": "test_invalid_payload", "capability": "api"}
+{"type": "TestStarted", "test": "test_health_check", "name": "test_health_check"}
+{"type": "CapabilityResolved", "test": "test_health_check", "capability": "api", "provider": "requests"}
+{"type": "CapabilityObserved", "test": "test_health_check", "capability": "api", "action": "get", "data": {"path": "/health", "status_code": 200}}
+{"type": "TestPassed", "test": "test_health_check", "name": "test_health_check"}
+{"type": "CapabilityTeardown", "test": "test_health_check", "capability": "api"}
+{"type": "TestStarted", "test": "test_read_seeded_config", "name": "test_read_seeded_config"}
+{"type": "CapabilityResolved", "test": "test_read_seeded_config", "capability": "filesystem", "provider": "memory"}
+{"type": "CapabilityObserved", "test": "test_read_seeded_config", "capability": "filesystem", "action": "read_text", "data": {"path": "/data/input.txt", "bytes": 13}}
+{"type": "TestPassed", "test": "test_read_seeded_config", "name": "test_read_seeded_config"}
+{"type": "CapabilityTeardown", "test": "test_read_seeded_config", "capability": "filesystem"}
+{"type": "RunFinished", "test": null, "passed": 8, "failed": 4, "duration_seconds": 2.37}

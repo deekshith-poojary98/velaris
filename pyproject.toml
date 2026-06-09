@@ -1,0 +1,23 @@
+[project]
+name = "velaris"
+version = "0.1.0"
+description = "Capability-driven test runner (monorepo workspace)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "responses>=0.25",
+]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "packages/velaris-contracts/tests",
+    "packages/velaris-core/tests",
+]
+pythonpath = [
+    "packages/velaris-contracts",
+    "packages/velaris-core",
+]

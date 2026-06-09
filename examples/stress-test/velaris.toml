@@ -1,0 +1,18 @@
+[capabilities.database]
+provider = "memory"
+
+[capabilities.database.options.seed.users.alice]
+name = "Alice"
+role = "admin"
+
+[capabilities.filesystem]
+provider = "memory"
+
+[capabilities.filesystem.options.files]
+"/data/input.txt" = "seed-content"
+
+[capabilities.random]
+provider = "seeded"
+
+[capabilities.random.options]
+seed = 42

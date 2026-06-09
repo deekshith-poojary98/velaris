@@ -1,0 +1,21 @@
+# base_url duplicated in api.options — same value as target_environment.endpoints.api.
+# Test does not inject target_environment.
+
+[capabilities.api]
+provider = "requests"
+
+[capabilities.api.options]
+base_url = "http://testserver"
+
+[capabilities.secrets]
+provider = "static"
+
+[capabilities.secrets.options]
+values = { API_TOKEN = "compose-token" }
+
+[capabilities.target_environment]
+provider = "static"
+
+[capabilities.target_environment.options]
+environment = "local"
+endpoints = { api = "http://testserver" }

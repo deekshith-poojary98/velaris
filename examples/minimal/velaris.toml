@@ -1,0 +1,8 @@
+[capabilities.api]
+provider = "requests"
+
+[capabilities.api.options]
+base_url = "http://testserver"
+
+[capabilities.secrets]
+provider = "env"

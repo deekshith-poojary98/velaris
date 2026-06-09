@@ -1,0 +1,34 @@
+{"name": "test_dice_roll", "test": "test_dice_roll", "type": "TestStarted"}
+{"capability": "random", "provider": "seeded", "test": "test_dice_roll", "type": "CapabilityResolved"}
+{"action": "number", "capability": "random", "data": {"maximum": 6, "minimum": 1, "value": 6}, "test": "test_dice_roll", "type": "CapabilityObserved"}
+{"name": "test_dice_roll", "test": "test_dice_roll", "type": "TestPassed"}
+{"capability": "random", "provider": "seeded", "test": "test_dice_roll", "type": "CapabilityTeardown"}
+{"name": "test_login", "test": "test_login", "type": "TestStarted"}
+{"capability": "browser", "provider": "fake", "test": "test_login", "type": "CapabilityResolved"}
+{"action": "open", "capability": "browser", "data": {"path": "/login"}, "test": "test_login", "type": "CapabilityObserved"}
+{"action": "type", "capability": "browser", "data": {"path": "#username", "text": "demo"}, "test": "test_login", "type": "CapabilityObserved"}
+{"action": "click", "capability": "browser", "data": {"path": "#submit"}, "test": "test_login", "type": "CapabilityObserved"}
+{"name": "test_login", "test": "test_login", "type": "TestPassed"}
+{"action": "close", "capability": "browser", "data": {}, "test": "test_login", "type": "CapabilityObserved"}
+{"capability": "browser", "provider": "fake", "test": "test_login", "type": "CapabilityTeardown"}
+{"name": "test_login_yaml", "test": "test_login_yaml", "type": "TestStarted"}
+{"capability": "browser", "provider": "fake", "test": "test_login_yaml", "type": "CapabilityResolved"}
+{"action": "open", "capability": "browser", "data": {"path": "/login"}, "test": "test_login_yaml", "type": "CapabilityObserved"}
+{"action": "type", "capability": "browser", "data": {"path": "#username", "text": "demo"}, "test": "test_login_yaml", "type": "CapabilityObserved"}
+{"action": "click", "capability": "browser", "data": {"path": "#submit"}, "test": "test_login_yaml", "type": "CapabilityObserved"}
+{"name": "test_login_yaml", "test": "test_login_yaml", "type": "TestPassed"}
+{"action": "close", "capability": "browser", "data": {}, "test": "test_login_yaml", "type": "CapabilityObserved"}
+{"capability": "browser", "provider": "fake", "test": "test_login_yaml", "type": "CapabilityTeardown"}
+{"name": "test_random", "test": "test_random", "type": "TestStarted"}
+{"capability": "random", "provider": "seeded", "test": "test_random", "type": "CapabilityResolved"}
+{"name": "test_random", "test": "test_random", "type": "TestPassed"}
+{"capability": "random", "provider": "seeded", "test": "test_random", "type": "CapabilityTeardown"}
+{"name": "User logs in", "test": "User logs in", "type": "TestStarted"}
+{"capability": "browser", "provider": "fake", "test": "User logs in", "type": "CapabilityResolved"}
+{"action": "open", "capability": "browser", "data": {"path": "/login"}, "test": "User logs in", "type": "CapabilityObserved"}
+{"action": "type", "capability": "browser", "data": {"path": "#username", "text": "demo"}, "test": "User logs in", "type": "CapabilityObserved"}
+{"action": "click", "capability": "browser", "data": {"path": "#submit"}, "test": "User logs in", "type": "CapabilityObserved"}
+{"name": "User logs in", "test": "User logs in", "type": "TestPassed"}
+{"action": "close", "capability": "browser", "data": {}, "test": "User logs in", "type": "CapabilityObserved"}
+{"capability": "browser", "provider": "fake", "test": "User logs in", "type": "CapabilityTeardown"}
+{"duration_seconds": 0.007218333979835734, "failed": 0, "passed": 5, "test": null, "type": "RunFinished"}

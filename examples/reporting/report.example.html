@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Velaris Test Report</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --surface: #121820;
+      --surface-2: #1a2332;
+      --border: #2a3544;
+      --text: #e8edf4;
+      --muted: #8b9cb3;
+      --green: #3ecf8e;
+      --green-dim: rgba(62, 207, 142, 0.12);
+      --red: #f07178;
+      --red-dim: rgba(240, 113, 120, 0.12);
+      --cyan: #56c8ff;
+      --violet: #a78bfa;
+      --radius: 12px;
+      --font: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+      --mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    header { margin-bottom: 2rem; }
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--green), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    header p { color: var(--muted); margin-top: 0.35rem; font-size: 0.95rem; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+    .card-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+    .card-value { font-size: 1.75rem; font-weight: 700; }
+    .card-value.pass { color: var(--green); }
+    .card-value.fail { color: var(--red); }
+    .card-value.neutral { color: var(--cyan); }
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    @media (max-width: 768px) { .layout { grid-template-columns: 1fr; } }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .panel-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .test-list { list-style: none; }
+    .test-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .test-item:last-child { border-bottom: none; }
+    .test-item:hover { background: var(--surface-2); }
+    .test-item.active { background: var(--surface-2); border-left: 3px solid var(--cyan); }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-dot.passed { background: var(--green); box-shadow: 0 0 8px var(--green-dim); }
+    .status-dot.failed { background: var(--red); box-shadow: 0 0 8px var(--red-dim); }
+    .status-dot.unknown { background: var(--muted); }
+    .test-name { flex: 1; font-family: var(--mono); font-size: 0.875rem; }
+    .test-badge {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .test-badge.passed { background: var(--green-dim); color: var(--green); }
+    .test-badge.failed { background: var(--red-dim); color: var(--red); }
+    .detail-body { padding: 1.25rem; min-height: 200px; }
+    .detail-empty { color: var(--muted); font-size: 0.9rem; padding: 2rem; text-align: center; }
+    .detail-title {
+      font-family: var(--mono);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .error-box {
+      background: var(--red-dim);
+      border: 1px solid rgba(240, 113, 120, 0.3);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      color: var(--red);
+    }
+    .error-type { font-weight: 700; margin-bottom: 0.35rem; }
+    .timeline { list-style: none; }
+    .timeline-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.875rem;
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-marker {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--violet);
+      margin-top: 0.45rem;
+      flex-shrink: 0;
+    }
+    .timeline-marker.resolve { background: var(--cyan); }
+    .timeline-marker.teardown { background: var(--muted); }
+    .timeline-marker.observed { background: var(--green); }
+    .timeline-label { font-family: var(--mono); font-weight: 500; }
+    .timeline-detail { color: var(--muted); font-size: 0.8rem; margin-top: 0.15rem; }
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Velaris Test Report</h1>
+      <p>Generated from JSON event log · 0.01s total</p>
+    </header>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card-label">Total</div>
+        <div class="card-value neutral">5</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Passed</div>
+        <div class="card-value pass">5</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Failed</div>
+        <div class="card-value fail">0</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Duration</div>
+        <div class="card-value neutral">0.01s</div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <div class="panel">
+        <div class="panel-header">Tests</div>
+        <ul class="test-list" id="test-list"></ul>
+      </div>
+      <div class="panel">
+        <div class="panel-header">Test detail</div>
+        <div class="detail-body" id="detail">
+          <div class="detail-empty">Select a test to view its capability timeline</div>
+        </div>
+      </div>
+    </div>
+
+    <footer>Velaris · static report · no server required</footer>
+  </div>
+
+  <script>
+    const tests = [{"name": "test_dice_roll", "status": "passed", "message": "", "error_type": "", "timeline": [{"type": "CapabilityResolved", "label": "Resolve random", "detail": "provider: seeded"}, {"type": "CapabilityObserved", "label": "random.number", "detail": "maximum=6, minimum=1, value=6"}, {"type": "CapabilityTeardown", "label": "Teardown random", "detail": "provider: seeded"}]}, {"name": "test_login", "status": "passed", "message": "", "error_type": "", "timeline": [{"type": "CapabilityResolved", "label": "Resolve browser", "detail": "provider: fake"}, {"type": "CapabilityObserved", "label": "browser.open", "detail": "path='/login'"}, {"type": "CapabilityObserved", "label": "browser.type", "detail": "path='#username', text='demo'"}, {"type": "CapabilityObserved", "label": "browser.click", "detail": "path='#submit'"}, {"type": "CapabilityObserved", "label": "browser.close", "detail": ""}, {"type": "CapabilityTeardown", "label": "Teardown browser", "detail": "provider: fake"}]}, {"name": "test_login_yaml", "status": "passed", "message": "", "error_type": "", "timeline": [{"type": "CapabilityResolved", "label": "Resolve browser", "detail": "provider: fake"}, {"type": "CapabilityObserved", "label": "browser.open", "detail": "path='/login'"}, {"type": "CapabilityObserved", "label": "browser.type", "detail": "path='#username', text='demo'"}, {"type": "CapabilityObserved", "label": "browser.click", "detail": "path='#submit'"}, {"type": "CapabilityObserved", "label": "browser.close", "detail": ""}, {"type": "CapabilityTeardown", "label": "Teardown browser", "detail": "provider: fake"}]}, {"name": "test_random", "status": "passed", "message": "", "error_type": "", "timeline": [{"type": "CapabilityResolved", "label": "Resolve random", "detail": "provider: seeded"}, {"type": "CapabilityTeardown", "label": "Teardown random", "detail": "provider: seeded"}]}, {"name": "User logs in", "status": "passed", "message": "", "error_type": "", "timeline": [{"type": "CapabilityResolved", "label": "Resolve browser", "detail": "provider: fake"}, {"type": "CapabilityObserved", "label": "browser.open", "detail": "path='/login'"}, {"type": "CapabilityObserved", "label": "browser.type", "detail": "path='#username', text='demo'"}, {"type": "CapabilityObserved", "label": "browser.click", "detail": "path='#submit'"}, {"type": "CapabilityObserved", "label": "browser.close", "detail": ""}, {"type": "CapabilityTeardown", "label": "Teardown browser", "detail": "provider: fake"}]}];
+
+    const listEl = document.getElementById("test-list");
+    const detailEl = document.getElementById("detail");
+
+    function markerClass(type) {
+      if (type === "CapabilityResolved") return "resolve";
+      if (type === "CapabilityTeardown") return "teardown";
+      return "observed";
+    }
+
+    function renderDetail(test) {
+      let html = `<div class="detail-title">${escapeHtml(test.name)}</div>`;
+      if (test.status === "failed" && (test.message || test.error_type)) {
+        html += `<div class="error-box">`;
+        if (test.error_type) html += `<div class="error-type">${escapeHtml(test.error_type)}</div>`;
+        if (test.message) html += escapeHtml(test.message);
+        html += `</div>`;
+      }
+      if (test.timeline.length === 0) {
+        html += `<p class="detail-empty">No capability events recorded</p>`;
+      } else {
+        html += `<ul class="timeline">`;
+        for (const ev of test.timeline) {
+          html += `<li class="timeline-item">
+            <span class="timeline-marker ${markerClass(ev.type)}"></span>
+            <div>
+              <div class="timeline-label">${escapeHtml(ev.label)}</div>
+              ${ev.detail ? `<div class="timeline-detail">${escapeHtml(ev.detail)}</div>` : ""}
+            </div>
+          </li>`;
+        }
+        html += `</ul>`;
+      }
+      detailEl.innerHTML = html;
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    tests.forEach((test, index) => {
+      const li = document.createElement("li");
+      li.className = "test-item";
+      li.innerHTML = `
+        <span class="status-dot ${test.status}"></span>
+        <span class="test-name">${escapeHtml(test.name)}</span>
+        <span class="test-badge ${test.status}">${test.status}</span>
+      `;
+      li.addEventListener("click", () => {
+        document.querySelectorAll(".test-item").forEach(el => el.classList.remove("active"));
+        li.classList.add("active");
+        renderDetail(test);
+      });
+      listEl.appendChild(li);
+      if (index === 0) {
+        li.classList.add("active");
+        renderDetail(test);
+      }
+    });
+
+    if (tests.length === 0) {
+      listEl.innerHTML = `<li class="detail-empty">No tests found in event log</li>`;
+      detailEl.innerHTML = `<div class="detail-empty">No test data</div>`;
+    }
+  </script>
+</body>
+</html>

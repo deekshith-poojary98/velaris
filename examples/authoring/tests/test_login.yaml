@@ -1,0 +1,9 @@
+name: test_login_yaml
+
+capabilities:
+  - browser
+
+actions:
+  - browser.open("/login")
+  - browser.type("#username", "demo")
+  - browser.click("#submit")

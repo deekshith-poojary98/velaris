@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+
+# Python environments
+.venv/
+venv/
+env/
+
+# Python bytecode & caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# IDE / editor
+.cursor/
+.idea/
+.vscode/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# VitePress
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
+# Generated run artifacts (any directory)
+report.html
+report.jsonl
+run.jsonl
+events.jsonl
+
+# Committed reporting samples (exceptions)
+!examples/reporting/report.example.html
+!examples/reporting/run.example.jsonl

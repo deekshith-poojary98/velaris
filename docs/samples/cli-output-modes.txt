@@ -1,0 +1,51 @@
+# Default output (velaris run tests/test_database.py)
+
+✓ test_insert_row
+✓ test_read_seeded_row
+
+Passed: 2
+Failed: 0
+Duration: 0.01s
+
+# Verbose output (velaris run tests/test_database.py --verbose)
+
+RUN test_insert_row
+RESOLVE database(memory)
+PASS test_insert_row
+TEARDOWN database
+RUN test_read_seeded_row
+RESOLVE database(memory)
+PASS test_read_seeded_row
+TEARDOWN database
+Passed: 2
+Failed: 0
+Duration: 0.01s
+
+# Debug output (velaris run tests/test_database.py --debug)
+
+RUN test_insert_row
+RESOLVE database(memory)
+database.insert_row
+database.get_row
+PASS test_insert_row
+TEARDOWN database
+RUN test_read_seeded_row
+RESOLVE database(memory)
+database.get_row
+PASS test_read_seeded_row
+TEARDOWN database
+Passed: 2
+Failed: 0
+Duration: 0.01s
+
+# Failure output (default mode)
+
+✗ test_login
+
+AssertionError:
+Expected 2 rows
+Actual: 1
+
+Passed: 0
+Failed: 1
+Duration: 0.00s

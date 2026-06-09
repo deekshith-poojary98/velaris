@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "velaris-core"
+version = "0.1.0"
+description = "Velaris capability registry, resolver, and configuration"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+dependencies = [
+    "velaris-contracts",
+    "requests>=2.31",
+    "pyyaml>=6.0",
+    "tomli>=2.0; python_version < '3.11'",
+]
+
+[project.scripts]
+velaris = "velaris_core.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["velaris_core"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "responses>=0.25",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
