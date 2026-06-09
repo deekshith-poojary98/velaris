@@ -59,9 +59,19 @@ velaris run tests/ --config velaris.verbose.toml
 
 Same test, verbose event payloads. No test changes.
 
+## Scaffold a new project
+
+After [Installation](/getting-started/installation), skip manual file creation:
+
+```bash
+velaris init my-project
+cd my-project
+velaris run
+```
+
 ## Write your own test
 
-Create a project directory:
+Create a project directory manually:
 
 ```text
 my-project/

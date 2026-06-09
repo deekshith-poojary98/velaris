@@ -1,7 +1,6 @@
 /// <reference path="./env.d.ts" />
 
 import { defineConfig } from 'vitepress'
-import type { DefaultTheme } from 'vitepress/theme'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 
 export default withMermaid(defineConfig({
@@ -15,7 +14,8 @@ export default withMermaid(defineConfig({
 
   head: [
     ['meta', { name: 'theme-color', content: '#3dd68c' }],
-    ['link', { rel: 'icon', href: '/favicon.svg' }],
+    ['link', { rel: 'icon', type: 'image/png', href: '/brand/logo.png' }],
+    ['link', { rel: 'apple-touch-icon', href: '/brand/logo.png' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
     [
@@ -33,7 +33,8 @@ export default withMermaid(defineConfig({
   },
 
   themeConfig: {
-    logo: { text: 'Velaris' } as unknown as DefaultTheme.ThemeableImage,
+    logo: '/brand/logo.png',
+    siteTitle: 'Velaris',
 
     nav: [
       { text: 'Getting Started', link: '/getting-started/', activeMatch: '/getting-started/' },

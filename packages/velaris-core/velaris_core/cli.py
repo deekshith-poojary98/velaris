@@ -9,6 +9,7 @@ from pathlib import Path
 from velaris_core.html_report import generate_report
 from velaris_core.output_mode import OutputMode
 from velaris_core.runner import run
+from velaris_core.scaffold import ScaffoldError, format_success_message, init_project
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -66,6 +67,15 @@ def main(argv: list[str] | None = None) -> int:
         help="Output HTML file path (default: report.html)",
     )
 
+    init_parser = subparsers.add_parser(
+        "init",
+        help="Create a new Velaris project with a passing sample test",
+    )
+    init_parser.add_argument(
+        "project_name",
+        help="Project directory to create (parent directories are created if needed)",
+    )
+
     args = parser.parse_args(argv)
     if args.command == "run":
         output_mode = OutputMode.DEFAULT
@@ -95,6 +105,15 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "report":
         out = generate_report(args.json_log, args.output)
         print(f"Report written to {out}")
+        return 0
+
+    if args.command == "init":
+        try:
+            init_project(args.project_name)
+        except ScaffoldError as exc:
+            print(f"Error: {exc}", file=sys.stderr)
+            return 1
+        print(format_success_message(args.project_name), end="")
         return 0
 
     return 2

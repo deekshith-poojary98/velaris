@@ -1,10 +1,38 @@
 # CLI Reference
 
+## `velaris init`
+
+Create a new project with `velaris.toml`, a passing browser test, and a README.
+
+```bash
+velaris init <project-name>
+```
+
+Examples:
+
+```bash
+velaris init demo
+velaris init projects/demo
+```
+
+Output:
+
+```text
+Created project: demo
+
+Next steps:
+
+cd demo
+velaris run
+```
+
+Fails if the target directory already exists. Creates parent directories when needed.
+
+## `velaris run`
+
 ```bash
 velaris run [paths...] [options]
 ```
-
-## `velaris run`
 
 Execute Velaris tests.
 
