@@ -32,6 +32,7 @@ Thumbs.db
 # VitePress
 docs/.vitepress/dist/
 docs/.vitepress/cache/
+docs/public/brand/
 
 # Generated run artifacts (any directory)
 report.html

@@ -3,8 +3,16 @@
 import { defineConfig } from 'vitepress'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 
+const base = process.env.VITEPRESS_BASE || '/'
+
+/** Prefix a public asset path with the VitePress base (required for GitHub Pages). */
+function withBase(path: string): string {
+  const asset = path.replace(/^\//, '')
+  return `${base}${asset}`
+}
+
 export default withMermaid(defineConfig({
-  base: process.env.VITEPRESS_BASE || '/',
+  base,
   title: 'Velaris',
   description: 'Capability-driven testing framework',
   lang: 'en-US',
@@ -14,8 +22,8 @@ export default withMermaid(defineConfig({
 
   head: [
     ['meta', { name: 'theme-color', content: '#3dd68c' }],
-    ['link', { rel: 'icon', type: 'image/png', href: '/brand/logo.png' }],
-    ['link', { rel: 'apple-touch-icon', href: '/brand/logo.png' }],
+    ['link', { rel: 'icon', type: 'image/png', href: withBase('brand/logo.png') }],
+    ['link', { rel: 'apple-touch-icon', href: withBase('brand/logo.png') }],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
     [

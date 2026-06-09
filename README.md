@@ -1,4 +1,9 @@
-# Velaris
+<div align="center">
+  <img src="https://raw.githubusercontent.com/deekshith-poojary98/velaris/main/assets/brand/logo_with_text.png"
+       alt="Velaris Logo"
+       width="200"
+       align="middle">
+</div>
 
 A hobby project exploring **capability-driven test execution**: tests declare what they need (`api`, `browser`, `secrets`), configuration selects implementations, and a minimal runner handles collection, resolution, injection, and teardown.
 
