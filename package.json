@@ -5,7 +5,7 @@
   "description": "Documentation site for Velaris",
   "type": "module",
   "scripts": {
-    "docs:sync-brand": "rm -rf docs/public/brand && cp -R assets/brand docs/public/brand",
+    "docs:sync-brand": "mkdir -p docs/public && rm -rf docs/public/brand && cp -R assets/brand docs/public/brand",
     "docs:dev": "npm run docs:sync-brand && vitepress dev docs",
     "docs:build": "npm run docs:sync-brand && vitepress build docs",
     "docs:preview": "vitepress preview docs"
