@@ -5,7 +5,7 @@
        align="middle">
 </div>
 
-A hobby project exploring **capability-driven test execution**: tests declare what they need (`api`, `browser`, `secrets`), configuration selects implementations, and a minimal runner handles collection, resolution, injection, and teardown.
+A project exploring **capability-driven test execution**: tests declare what they need (`api`, `browser`, `secrets`), configuration selects implementations, and a minimal runner handles collection, resolution, injection, and teardown.
 
 This is not a pytest replacement, enterprise governance layer, or plugin marketplace — yet. Today it is a working execution engine you can run locally.
 
