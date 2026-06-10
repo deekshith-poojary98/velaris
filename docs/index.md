@@ -3,60 +3,39 @@ layout: home
 
 hero:
   name: Velaris
-  text: Capability-driven testing
-  tagline: Tests declare what they need. Configuration selects implementations. The runner handles collection, resolution, injection, and teardown.
+  text: One engine, many test styles
+  tagline: A capability-driven testing framework where Python, YAML, and BDD tests share the same execution engine — and you swap implementations without touching test code.
   actions:
     - theme: brand
-      text: Get Started
-      link: /getting-started/
+      text: Quickstart
+      link: /getting-started/quickstart
     - theme: alt
-      text: How It's Different
-      link: /concepts/how-velaris-is-different
+      text: What can it do today?
+      link: /what-velaris-can-do-today
 
 features:
-  - icon: 🧩
-    title: Capabilities, not fixtures
-    details: Tests declare required capabilities with @test("api", "secrets"). Parameter names match capability IDs. No global setup functions.
-  - icon: ⚙️
-    title: Config-driven providers
-    details: velaris.toml binds each capability to a provider implementation. Swap env vs static secrets without changing test code.
+  - icon: 🔁
+    title: Swap implementations, not tests
+    details: Tests declare what they need. velaris.toml picks how. Switch env vs static secrets, or fake vs verbose browser, without changing a line of test code.
   - icon: 📝
     title: Multiple authoring styles
-    details: Python, YAML, and minimal BDD (.feature) all compile to the same TestSpec IR — one runner, one resolver.
-  - icon: 🔌
-    title: Manual plugins
-    details: Extend Velaris with velaris_plugins.py and velaris_core.sdk. No entry points or auto-discovery in v0.1.0-alpha.
+    details: Write tests in Python, YAML, or minimal BDD (.feature). All three run on one engine with one set of results.
   - icon: 📊
-    title: Reports that read like tests
-    details: Default ✓/✗ stdout, optional --verbose/--debug, JSON event logs, and static HTML reports.
-  - icon: 🔬
-    title: Alpha release
-    details: v0.1.0-alpha — execution engine is stable. Plugin ecosystem and packaging are experimental.
+    title: Shared reporting and execution
+    details: Every test style flows through the same runner, the same lifecycle events, and the same reports — stdout, JSON logs, or static HTML.
 ---
 
-## How it works
+## Why Velaris?
 
-Velaris follows a single execution pipeline for every test run:
+- **Swap implementations without changing tests** — capabilities are declared in tests, providers are chosen in config.
+- **Multiple authoring styles** — Python, YAML, and BDD, all on one engine.
+- **Shared reporting and execution model** — one runner, one event stream, consistent reports.
 
-```mermaid
-flowchart LR
-    A[Collect] --> B[TestSpec]
-    B --> C[Resolve]
-    C --> D[Inject]
-    D --> E[Execute]
-    E --> F[Events]
-    F --> G[Report]
-```
+## Start here
 
-| Stage | What happens |
-|-------|----------------|
-| **Collect** | Adapters compile Python, YAML, or BDD into TestSpec |
-| **TestSpec** | Validate name, capabilities, and callable into IR |
-| **Resolve** | Look up provider factories from registry + config |
-| **Inject** | Pass capability instances as test parameters |
-| **Execute** | Run the test callable |
-| **Events** | Emit lifecycle and capability observations |
-| **Report** | Stdout, JSON log, or static HTML |
+New to Velaris? **[Follow the Quickstart](/getting-started/quickstart)** — install, scaffold, and run a passing test in a few minutes.
+
+Curious what's possible? See **[What Velaris Can Do Today](/what-velaris-can-do-today)**.
 
 ## Quick example
 
@@ -81,15 +60,16 @@ velaris run tests/ --html-report
 open report.html
 ```
 
-## What Velaris is not (v0.1.0-alpha)
+## What Velaris is not (yet)
 
-- Not a pytest replacement
-- No plugin discovery or PyPI plugin packages
-- No full Cucumber/Behave-style BDD (minimal Gherkin only)
-- No parallel execution
-- No Playwright or Selenium providers (fake browser only)
+Velaris is **v0.1.0-alpha**. Be aware before you try it:
 
-See [Alpha scope](/alpha-scope) for full limitations.
+- Not a pytest replacement — see [Why Not pytest?](/concepts/why-not-pytest)
+- No PyPI package yet — install from source
+- No Playwright or Selenium providers — the browser capability is an in-memory fake
+- No full Cucumber/Behave BDD (minimal Gherkin only) and no parallel execution
+
+See [What Velaris Can Do Today](/what-velaris-can-do-today) for the honest, complete picture.
 
 <style>
 /* Hide the redundant top-of-content H2 spacing on the home markdown block */

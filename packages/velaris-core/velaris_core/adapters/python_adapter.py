@@ -19,6 +19,7 @@ class PythonAdapter:
     """Compile ``@test`` functions in a ``.py`` module into TestSpec IR."""
 
     extensions: tuple[str, ...] = (".py",)
+    authoring_style: str = "python"
 
     def collect(self, path: Path) -> list[TestSpec]:
         module = self._load_module(path)

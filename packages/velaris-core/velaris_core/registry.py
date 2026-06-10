@@ -42,3 +42,7 @@ class Registry:
 
     def list_providers(self, capability_id: str) -> list[str]:
         return sorted(name for cap, name in self._factories if cap == capability_id)
+
+    def list_capabilities(self) -> list[str]:
+        """Return the distinct capability IDs that have a registered provider."""
+        return sorted({cap for cap, _name in self._factories})

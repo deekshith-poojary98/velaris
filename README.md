@@ -14,13 +14,14 @@ This is not a pytest replacement, enterprise governance layer, or plugin marketp
 | Area | State |
 |------|-------|
 | Execution engine | Working — `velaris run` |
+| Tooling | `init`, `collect`, `run`, `report`, `capabilities`, `capability`, `doctor` |
 | Capabilities | `api`, `secrets`, `browser`, `target_environment` + external plugins |
 | Authoring | Python, YAML, minimal BDD (`.feature`) → TestSpec |
 | Reporting | Default ✓/✗ stdout, `--verbose` / `--debug`, JSON log, static HTML report |
 | Plugin bootstrap | Manual — `velaris_plugins.py` from cwd |
 | Plugin discovery | Not implemented |
 
-**108 tests passing** across `velaris-contracts` and `velaris-core`.
+**147 tests passing** across `velaris-contracts` and `velaris-core`.
 
 ## Install
 
@@ -102,6 +103,28 @@ def test_login(browser):
 ```
 
 `@test("capability", ...)` declares required capabilities explicitly. Parameter names must match capability IDs.
+
+## CLI
+
+The fastest path is `velaris init`:
+
+```bash
+velaris init demo
+cd demo
+velaris run
+```
+
+| Command | Purpose |
+|---------|---------|
+| `velaris init <name>` | Scaffold a new project with a passing sample test |
+| `velaris collect [paths]` | Discover tests and show what would run — no execution |
+| `velaris run [paths]` | Execute tests |
+| `velaris report <json-log>` | Generate a static HTML report from an event log |
+| `velaris capabilities` | List capabilities Velaris knows about |
+| `velaris capability <id>` | Show a capability's description, methods, and providers |
+| `velaris doctor` | Diagnose the local environment before running |
+
+See the [CLI reference](docs/getting-started/cli.md) for full options.
 
 ## Architecture
 

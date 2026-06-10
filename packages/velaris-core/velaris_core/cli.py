@@ -6,6 +6,18 @@ import argparse
 import sys
 from pathlib import Path
 
+from velaris_core.capability_info import (
+    UnknownCapabilityError,
+    capabilities_to_json,
+    capability_to_json,
+    describe_capability,
+    format_capabilities_list,
+    format_capability_detail,
+    list_capabilities,
+)
+from velaris_core.discovery import discover, format_tree, to_json
+from velaris_core.doctor import format_report, report_to_json, run_diagnostics
+from velaris_core.errors import CollectionError
 from velaris_core.html_report import generate_report
 from velaris_core.output_mode import OutputMode
 from velaris_core.runner import run
@@ -50,6 +62,67 @@ def main(argv: list[str] | None = None) -> int:
         "--debug",
         action="store_true",
         help="Show all events including capability observations",
+    )
+
+    collect_parser = subparsers.add_parser(
+        "collect",
+        help="Discover tests and show what would run — no execution",
+    )
+    collect_parser.add_argument(
+        "paths",
+        nargs="*",
+        default=["tests"],
+        help="Test files or directories",
+    )
+    collect_parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Emit collected tests as a JSON array instead of a tree",
+    )
+
+    capabilities_parser = subparsers.add_parser(
+        "capabilities",
+        help="List capabilities Velaris knows about — no execution",
+    )
+    capabilities_parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Emit capability IDs as a JSON array",
+    )
+
+    capability_parser = subparsers.add_parser(
+        "capability",
+        help="Show one capability's description, methods, and providers",
+    )
+    capability_parser.add_argument(
+        "capability_id",
+        help="Capability ID to describe (e.g. browser)",
+    )
+    capability_parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Emit capability metadata as a JSON object",
+    )
+
+    doctor_parser = subparsers.add_parser(
+        "doctor",
+        help="Diagnose the local Velaris environment — no execution",
+    )
+    doctor_parser.add_argument(
+        "paths",
+        nargs="*",
+        default=["tests"],
+        help="Test files or directories to check (default: tests)",
+    )
+    doctor_parser.add_argument(
+        "--config",
+        default="velaris.toml",
+        help="Path to velaris.toml",
+    )
+    doctor_parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Emit diagnostics as a JSON object",
     )
 
     report_parser = subparsers.add_parser(
@@ -101,6 +174,34 @@ def main(argv: list[str] | None = None) -> int:
             print(f"Report written to {out}")
 
         return result.exit_code
+
+    if args.command == "collect":
+        try:
+            tests = discover(args.paths)
+        except CollectionError as exc:
+            print(f"CollectionError:\n{exc}", file=sys.stderr)
+            return 1
+        print(to_json(tests) if args.json else format_tree(tests))
+        return 0
+
+    if args.command == "capabilities":
+        ids = list_capabilities()
+        print(capabilities_to_json(ids) if args.json else format_capabilities_list(ids))
+        return 0
+
+    if args.command == "capability":
+        try:
+            meta = describe_capability(args.capability_id)
+        except UnknownCapabilityError as exc:
+            print(f"Error: {exc}", file=sys.stderr)
+            return 1
+        print(capability_to_json(meta) if args.json else format_capability_detail(meta))
+        return 0
+
+    if args.command == "doctor":
+        report = run_diagnostics(args.paths, config_path=args.config)
+        print(report_to_json(report) if args.json else format_report(report))
+        return report.exit_code
 
     if args.command == "report":
         out = generate_report(args.json_log, args.output)

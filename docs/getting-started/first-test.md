@@ -1,16 +1,13 @@
 # Your First Test
 
-Run a passing test in under two minutes using the **browser** example — no network or environment variables required.
+The fastest way to a passing test is `velaris init`. If you haven't installed Velaris yet, follow the [Quickstart](/getting-started/quickstart) first — it covers install, scaffold, and run end to end.
 
-## 1. Install Velaris
-
-If you haven't already, follow [Installation](/getting-started/installation).
-
-## 2. Run the browser example
+## Scaffold and run
 
 ```bash
-cd examples/browser
-velaris run tests/ --config velaris.fake.toml
+velaris init demo
+cd demo
+velaris run
 ```
 
 Expected output:
@@ -20,10 +17,13 @@ Expected output:
 
 Passed: 1
 Failed: 0
-Duration: 0.00s
 ```
 
-## 3. Read the test
+`velaris init` is the **recommended onboarding path**. It generates a complete, working project that passes immediately — no manual file creation, no extra config flags.
+
+## Read the generated test
+
+`velaris init` creates `tests/test_login.py`:
 
 ```python
 from velaris_core.decorators import test as velaris_test
@@ -41,72 +41,30 @@ Three things to notice:
 2. The parameter name `browser` matches the capability ID
 3. The test calls methods on the injected instance — no construction
 
-## 4. Read the config
+## Read the generated config
+
+`velaris.toml` selects **which provider** backs each capability:
 
 ```toml
-# velaris.fake.toml
 [capabilities.browser]
 provider = "fake"
 ```
 
-Config selects **which provider** backs the `browser` capability. The test code stays the same when you swap providers.
+The test code stays the same when you swap providers — that's the core idea behind Velaris.
 
-## 5. Swap the provider
+## Swap the provider
 
-```bash
-velaris run tests/ --config velaris.verbose.toml
-```
-
-Same test, verbose event payloads. No test changes.
-
-## Scaffold a new project
-
-After [Installation](/getting-started/installation), skip manual file creation:
+Change the provider in `velaris.toml` (for example to a more verbose backend) and rerun:
 
 ```bash
-velaris init my-project
-cd my-project
 velaris run
 ```
 
-## Write your own test
-
-Create a project directory manually:
-
-```text
-my-project/
-├── velaris.toml
-└── tests/
-    └── test_demo.py
-```
-
-```toml
-# velaris.toml
-[capabilities.browser]
-provider = "fake"
-```
-
-```python
-# tests/test_demo.py
-from velaris_core.decorators import test
-
-@test("browser")
-def test_homepage(browser):
-    browser.open("/")
-    browser.click("#cta")
-```
-
-```bash
-cd my-project
-velaris run tests/
-```
+Same test, different behavior. No test changes.
 
 ## Next
 
 - [Configuration](/getting-started/configuration) — full `velaris.toml` reference
+- [Examples](/examples/) — more runnable sample projects
 - [Concepts: Capabilities](/concepts/capabilities) — contracts and providers
-- [Examples](/examples/) — more sample projects
-
-::: warning HTTP examples need setup
-The `examples/minimal` HTTP tests require `API_TOKEN` and HTTP mocking. Start with browser or [stress-test](/examples/stress-test) examples first.
-:::
+- [What Velaris Can Do Today](/what-velaris-can-do-today) — the complete feature list

@@ -18,10 +18,14 @@ class AuthoringAdapter(Protocol):
     """Compile one authoring file into TestSpec IR.
 
     ``extensions`` are lowercase suffixes including the dot (e.g. ``".py"``).
+    ``authoring_style`` is a short, stable identifier for the frontend
+    (``"python"``, ``"yaml"``, ``"bdd"``) used only by collection-time
+    introspection (``velaris collect``); the execution engine never reads it.
     ``collect`` receives a single file path and returns zero or more specs.
     """
 
     extensions: tuple[str, ...]
+    authoring_style: str
 
     def collect(self, path: Path) -> list[TestSpec]:
         """Compile the file at ``path`` into TestSpec IR."""

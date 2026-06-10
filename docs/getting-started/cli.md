@@ -28,6 +28,107 @@ velaris run
 
 Fails if the target directory already exists. Creates parent directories when needed.
 
+## `velaris collect`
+
+```bash
+velaris collect [paths...] [--json]
+```
+
+Discover tests and show what *would* run — **without executing anything**. No
+capability resolution, no provider creation, no reporting. See
+[Test Discovery](/guide/test-discovery) for the full guide.
+
+| Argument | Default | Description |
+|----------|---------|-------------|
+| `paths` | `tests` | Files or directories to collect |
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `--json` | — | Emit a JSON array instead of the human-readable tree |
+
+```bash
+velaris collect tests/
+```
+
+```text
+Found 1 test
+
+test_login
+  source: tests/test_login.py
+  authoring_style: python
+  capabilities:
+    - browser
+```
+
+## `velaris capabilities`
+
+```bash
+velaris capabilities [--json]
+```
+
+List the capabilities Velaris knows about (built-in contracts plus any
+registered plugin capabilities). No execution. See
+[Capability Introspection](/guide/capability-introspection).
+
+```text
+Available capabilities
+
+api
+browser
+secrets
+target_environment
+```
+
+## `velaris capability`
+
+```bash
+velaris capability <id> [--json]
+```
+
+Show one capability's description, methods, and registered providers.
+
+```text
+Capability: browser
+
+Description:
+Minimal browser automation surface for integration tests.
+
+Methods:
+  open(url)
+  click(selector)
+  type(selector, text)
+  close()
+
+Providers:
+  fake
+  verbose
+```
+
+## `velaris doctor`
+
+```bash
+velaris doctor [paths...] [--config velaris.toml] [--json]
+```
+
+Validate the local environment and explain common setup problems **before**
+execution. Runs no tests, resolves no capabilities, instantiates no providers.
+See [Environment Diagnostics](/guide/doctor).
+
+```text
+Velaris Environment Check
+
+✓ Python 3.13
+✓ velaris.toml found
+✓ tests directory found
+✓ 5 tests discovered
+✓ browser capability configured
+✓ fake provider available
+
+No issues detected.
+```
+
+Exit codes: `0` healthy, `1` warnings only, `2` errors.
+
 ## `velaris run`
 
 ```bash

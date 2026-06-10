@@ -1,6 +1,10 @@
 # Installation
 
-Velaris v0.1.0-alpha installs from source. Two Python packages are required.
+::: warning Alpha software
+Velaris is currently alpha software and **must be installed from source**. There is no PyPI package yet.
+:::
+
+Velaris v0.1.0-alpha installs from a git clone. Two Python packages are required.
 
 ## Requirements
 
@@ -10,7 +14,7 @@ Velaris v0.1.0-alpha installs from source. Two Python packages are required.
 ## Install from clone
 
 ```bash
-git clone https://github.com/velaris-framework/velaris.git
+git clone https://github.com/deekshith-poojary98/velaris.git
 cd velaris
 
 python -m venv .venv
@@ -36,6 +40,10 @@ pip install -e packages/velaris-contracts -e packages/velaris-core
 velaris --help
 velaris run --help
 ```
+
+## Next step
+
+Installed? **[Continue to the Quickstart](/getting-started/quickstart)** to scaffold a project and run your first passing test.
 
 ## Documentation site (optional)
 

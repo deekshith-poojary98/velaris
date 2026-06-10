@@ -44,9 +44,11 @@ Not yet a fit:
 
 ## Next steps
 
-- [How Velaris Is Different](/concepts/how-velaris-is-different) — fixtures vs keywords vs capabilities
-- [Installation](/getting-started/installation) — set up from source
-- [Your First Test](/getting-started/first-test) — run a passing example in 2 minutes
-- [Authoring styles](/examples/authoring) — Python, YAML, and BDD
-- [Concepts](/concepts/) — capabilities, providers, TestSpec, events
-- [Architecture](/architecture/) — how the pipeline fits together
+Start here, in order:
+
+1. **[Quickstart](/getting-started/quickstart)** — install, scaffold, and run a passing test
+2. [What Velaris Can Do Today](/what-velaris-can-do-today) — the complete feature list
+3. [Why Not pytest?](/concepts/why-not-pytest) — when Velaris is the right tool
+4. [Examples](/examples/) — runnable sample projects
+
+Once you're comfortable, dig into [Concepts](/concepts/) and the [Advanced](/architecture/) section for architecture and internals.

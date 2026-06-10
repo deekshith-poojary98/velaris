@@ -21,6 +21,7 @@ class BddAdapter:
     """Compile a ``.feature`` scenario into TestSpec IR."""
 
     extensions: tuple[str, ...] = (".feature",)
+    authoring_style: str = "bdd"
 
     def collect(self, path: Path) -> list[TestSpec]:
         specs: list[TestSpec] = []

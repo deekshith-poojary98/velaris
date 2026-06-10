@@ -11,6 +11,61 @@ function withBase(path: string): string {
   return `${base}${asset}`
 }
 
+const gettingStartedSidebar = [
+  {
+    text: 'Getting Started',
+    items: [
+      { text: 'Introduction', link: '/getting-started/' },
+      { text: 'Quickstart', link: '/getting-started/quickstart' },
+      { text: 'Installation', link: '/getting-started/installation' },
+      { text: 'Your First Test', link: '/getting-started/first-test' },
+      { text: 'What Velaris Can Do Today', link: '/what-velaris-can-do-today' },
+      { text: 'Configuration', link: '/getting-started/configuration' },
+      { text: 'CLI Reference', link: '/getting-started/cli' },
+    ],
+  },
+]
+
+const advancedSidebar = [
+  {
+    text: 'Design & Architecture',
+    items: [
+      { text: 'Overview', link: '/architecture/' },
+      { text: 'Execution Pipeline', link: '/architecture/execution-pipeline' },
+      { text: 'Packages', link: '/architecture/packages' },
+      { text: 'Model A Composition', link: '/architecture/model-a' },
+    ],
+  },
+  {
+    text: 'Authoring Internals',
+    items: [
+      { text: 'Authoring Adapters', link: '/authoring-styles' },
+      { text: 'Executable YAML', link: '/executable-yaml' },
+      { text: 'BDD Adapter', link: '/bdd-adapter' },
+    ],
+  },
+  {
+    text: 'Milestone Reports',
+    items: [
+      { text: 'HTML Report', link: '/html-report' },
+      { text: 'CLI UX Redesign', link: '/cli-ux-redesign' },
+      { text: 'Architecture Stability', link: '/architecture-stability-report' },
+      { text: 'Alpha Readiness', link: '/alpha-readiness-report' },
+      { text: 'Roadmap', link: '/roadmap' },
+    ],
+  },
+  {
+    text: 'RFCs',
+    items: [
+      { text: 'RFC-001 Capability Model', link: '/rfc/RFC-001-capability-model' },
+      { text: 'RFC-002 TestSpec IR', link: '/rfc/RFC-002-testspec-ir' },
+    ],
+  },
+]
+
+const advancedMatch =
+  '^/(architecture|authoring-styles|executable-yaml|bdd-adapter|html-report|cli-ux-redesign|architecture-stability-report|alpha-readiness-report|roadmap|rfc)'
+
 export default withMermaid(defineConfig({
   base,
   title: 'Velaris',
@@ -45,12 +100,12 @@ export default withMermaid(defineConfig({
     siteTitle: 'Velaris',
 
     nav: [
-      { text: 'Getting Started', link: '/getting-started/', activeMatch: '/getting-started/' },
-      { text: 'How It\'s Different', link: '/concepts/how-velaris-is-different' },
+      { text: 'Getting Started', link: '/getting-started/quickstart', activeMatch: '/getting-started/' },
+      { text: 'What Can It Do', link: '/what-velaris-can-do-today' },
       { text: 'Concepts', link: '/concepts/', activeMatch: '/concepts/' },
-      { text: 'Architecture', link: '/architecture/', activeMatch: '/architecture/' },
-      { text: 'Guide', link: '/guide/plugin-author', activeMatch: '/guide/' },
       { text: 'Examples', link: '/examples/', activeMatch: '/examples/' },
+      { text: 'Guide', link: '/guide/capabilities/', activeMatch: '/guide/' },
+      { text: 'Advanced', link: '/architecture/', activeMatch: advancedMatch },
       {
         text: 'v0.1.0-alpha',
         items: [
@@ -61,39 +116,15 @@ export default withMermaid(defineConfig({
     ],
 
     sidebar: {
-      '/getting-started/': [
-        {
-          text: 'Getting Started',
-          items: [
-            { text: 'Introduction', link: '/getting-started/' },
-            { text: 'Installation', link: '/getting-started/installation' },
-            { text: 'Your First Test', link: '/getting-started/first-test' },
-            { text: 'Configuration', link: '/getting-started/configuration' },
-            { text: 'CLI Reference', link: '/getting-started/cli' },
-            { text: 'HTML Report', link: '/html-report' },
-          ],
-        },
-      ],
-
-      '/concepts/how-velaris-is-different': [
-        {
-          text: 'Concepts',
-          items: [
-            { text: 'How Velaris Is Different', link: '/concepts/how-velaris-is-different' },
-            { text: 'Overview', link: '/concepts/' },
-            { text: 'Capabilities', link: '/concepts/capabilities' },
-            { text: 'Providers', link: '/concepts/providers' },
-            { text: 'TestSpec IR', link: '/concepts/testspec' },
-            { text: 'Events & Reporting', link: '/concepts/events' },
-          ],
-        },
-      ],
+      '/getting-started/': gettingStartedSidebar,
+      '/what-velaris-can-do-today': gettingStartedSidebar,
 
       '/concepts/': [
         {
           text: 'Concepts',
           items: [
             { text: 'Overview', link: '/concepts/' },
+            { text: 'Why Not pytest?', link: '/concepts/why-not-pytest' },
             { text: 'How Velaris Is Different', link: '/concepts/how-velaris-is-different' },
             { text: 'Capabilities', link: '/concepts/capabilities' },
             { text: 'Providers', link: '/concepts/providers' },
@@ -103,24 +134,13 @@ export default withMermaid(defineConfig({
         },
       ],
 
-      '/architecture/': [
-        {
-          text: 'Architecture',
-          items: [
-            { text: 'Overview', link: '/architecture/' },
-            { text: 'Execution Pipeline', link: '/architecture/execution-pipeline' },
-            { text: 'Packages', link: '/architecture/packages' },
-            { text: 'Model A Composition', link: '/architecture/model-a' },
-            { text: 'Authoring Adapters', link: '/authoring-styles' },
-          ],
-        },
-      ],
-
       '/guide/': [
         {
-          text: 'Guides',
+          text: 'Introspection & Diagnostics',
           items: [
-            { text: 'Plugin Author Guide', link: '/guide/plugin-author' },
+            { text: 'Test Discovery (collect)', link: '/guide/test-discovery' },
+            { text: 'Capability Introspection', link: '/guide/capability-introspection' },
+            { text: 'Environment Diagnostics (doctor)', link: '/guide/doctor' },
           ],
         },
         {
@@ -131,6 +151,12 @@ export default withMermaid(defineConfig({
             { text: 'secrets@0.1', link: '/guide/capabilities/secrets' },
             { text: 'browser@0.1', link: '/guide/capabilities/browser' },
             { text: 'target_environment@0.1', link: '/guide/capabilities/target-environment' },
+          ],
+        },
+        {
+          text: 'Plugin Development',
+          items: [
+            { text: 'Plugin Author Guide', link: '/guide/plugin-author' },
           ],
         },
       ],
@@ -150,6 +176,19 @@ export default withMermaid(defineConfig({
           ],
         },
       ],
+
+      // Advanced: architecture, internals, milestone reports, and RFCs.
+      // Shared across all advanced pages so the sidebar stays consistent.
+      '/architecture/': advancedSidebar,
+      '/authoring-styles': advancedSidebar,
+      '/executable-yaml': advancedSidebar,
+      '/bdd-adapter': advancedSidebar,
+      '/html-report': advancedSidebar,
+      '/cli-ux-redesign': advancedSidebar,
+      '/architecture-stability-report': advancedSidebar,
+      '/alpha-readiness-report': advancedSidebar,
+      '/roadmap': advancedSidebar,
+      '/rfc/': advancedSidebar,
     },
 
     socialLinks: [],

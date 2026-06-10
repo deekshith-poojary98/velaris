@@ -5,7 +5,7 @@
 
 Velaris is a capability-driven test execution engine. Tests declare what they need (`api`, `browser`, `secrets`, …), configuration selects provider implementations, and the runner handles collection, resolution, injection, execution, teardown, and reporting.
 
-This document describes **what works today**, **what is experimental**, and **what is explicitly not included** — based on the current codebase and test suite (108 tests across `velaris-contracts` and `velaris-core`).
+This document describes **what works today**, **what is experimental**, and **what is explicitly not included** — based on the current codebase and test suite (147 tests across `velaris-contracts` and `velaris-core`).
 
 ---
 
@@ -228,7 +228,18 @@ Scenario: User logs in
 
 ## CLI
 
-Velaris provides two commands via the `velaris` CLI (`velaris-core` package):
+The `velaris` CLI (`velaris-core` package) provides these commands. See the
+[CLI reference](/getting-started/cli) for full options.
+
+| Command | Purpose |
+|---------|---------|
+| `velaris init <name>` | Scaffold a new project with a passing sample test |
+| `velaris collect [paths]` | Discover tests and show what would run — no execution |
+| `velaris run [paths]` | Execute tests |
+| `velaris report <json-log>` | Generate a static HTML report from an event log |
+| `velaris capabilities` | List capabilities Velaris knows about |
+| `velaris capability <id>` | Show one capability's description, methods, providers |
+| `velaris doctor` | Diagnose the local environment before running |
 
 ### `velaris run`
 

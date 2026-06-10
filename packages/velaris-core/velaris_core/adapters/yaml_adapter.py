@@ -33,6 +33,7 @@ class YamlAdapter:
     """Compile a ``.yaml`` test (declaration-only or executable) into TestSpec IR."""
 
     extensions: tuple[str, ...] = (".yaml", ".yml")
+    authoring_style: str = "yaml"
 
     def collect(self, path: Path) -> list[TestSpec]:
         raw = self._parse(path)
