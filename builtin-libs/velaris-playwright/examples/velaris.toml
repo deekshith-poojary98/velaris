@@ -1,0 +1,6 @@
+[capabilities.browser]
+provider = "playwright"
+
+[capabilities.browser.options]
+browser_type = "chromium"
+headless = true

@@ -28,8 +28,9 @@ class PythonAdapter:
             if not getattr(obj, "__velaris_test__", False):
                 continue
             capabilities = list(getattr(obj, "__velaris_capabilities__", []))
+            tags = list(getattr(obj, "__velaris_tags__", []))
             specs.append(
-                TestSpec(name=name, capabilities=capabilities, callable=obj)
+                TestSpec(name=name, capabilities=capabilities, callable=obj, tags=tags)
             )
         return specs
 

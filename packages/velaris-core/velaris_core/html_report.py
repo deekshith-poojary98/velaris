@@ -572,8 +572,15 @@ def render_html(report: RunReport) -> str:
       document.getElementById("drawer-title").textContent = test.name;
       document.getElementById("drawer-status-wrap").innerHTML =
         `<span class="drawer-status ${{test.status}}">${{escapeHtml(test.status)}}</span>`;
-
       let body = "";
+      if (test.tags && test.tags.length > 0) {{
+        body += `<div class="section-label">Tags</div>`;
+        body += `<div style="margin-bottom: 1.5rem; font-family: var(--mono); font-size: 0.85rem; color: var(--muted); display: flex; gap: 0.5rem; flex-wrap: wrap;">`;
+        test.tags.forEach(tag => {{
+          body += `<span style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; padding: 0.15rem 0.45rem;">[${{escapeHtml(tag)}}]</span>`;
+        }});
+        body += `</div>`;
+      }}
       if (test.status === "failed" && (test.message || test.error_type)) {{
         body += `<div class="section-label">Failure</div><div class="error-box">`;
         if (test.error_type) body += `<div class="error-type">${{escapeHtml(test.error_type)}}</div>`;
@@ -650,4 +657,5 @@ def _test_to_dict(test: TestReport) -> dict:
             {"type": e.type, "label": e.label, "detail": e.detail}
             for e in test.timeline
         ],
+        "tags": test.tags,
     }

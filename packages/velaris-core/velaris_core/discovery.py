@@ -10,7 +10,7 @@ or JSON. It deliberately does not expose the callable or any execution detail.
 from __future__ import annotations
 
 import json
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 from velaris_core.adapters.base import AuthoringAdapter
@@ -30,6 +30,8 @@ class CollectedTest:
     authoring_style: str
     source: str
     capabilities: list[str]
+    tags: list[str] = field(default_factory=list)
+
 
 
 def discover(
@@ -37,6 +39,7 @@ def discover(
     *,
     adapters: list[AuthoringAdapter] | None = None,
     base: str | Path | None = None,
+    tags: list[str] | None = None,
 ) -> list[CollectedTest]:
     """Collect tests and return introspection records (no execution).
 
@@ -45,14 +48,18 @@ def discover(
     when the file lives outside ``base``.
     """
     base_path = Path(base) if base is not None else Path.cwd()
+    sourced = collect_sourced(paths, adapters=adapters)
+    if tags:
+        sourced = [item for item in sourced if any(tag in item.spec.tags for tag in tags)]
     return [
         CollectedTest(
             name=item.spec.name,
             authoring_style=item.authoring_style,
             source=_display_source(item.source, base_path),
             capabilities=list(item.spec.capabilities),
+            tags=list(item.spec.tags),
         )
-        for item in collect_sourced(paths, adapters=adapters)
+        for item in sourced
     ]
 
 
@@ -80,6 +87,9 @@ def format_tree(tests: list[CollectedTest]) -> str:
             "  capabilities:",
         ]
         lines.extend(f"    - {cap}" for cap in test.capabilities)
+        if test.tags:
+            lines.append("  tags:")
+            lines.extend(f"    - {tag}" for tag in test.tags)
         blocks.append("\n".join(lines))
     return "\n".join(blocks)
 

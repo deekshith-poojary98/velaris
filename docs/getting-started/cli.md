@@ -45,6 +45,7 @@ capability resolution, no provider creation, no reporting. See
 | Option | Default | Description |
 |--------|---------|-------------|
 | `--json` | — | Emit a JSON array instead of the human-readable tree |
+| `--tag` | — | Filter collected tests by tag (can be specified multiple times for OR selection) |
 
 ```bash
 velaris collect tests/
@@ -152,6 +153,7 @@ Execute Velaris tests.
 | `--debug` | — | Show all events including capability observations |
 | `--json-log` | — | Write JSON-lines event log to PATH |
 | `--html-report` | — | Generate HTML report after the run (default: `report.html`) |
+| `--tag` | — | Run tests matching this tag (can be specified multiple times for OR selection) |
 
 Generate a report in one command:
 

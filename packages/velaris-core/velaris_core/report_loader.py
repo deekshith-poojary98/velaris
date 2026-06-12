@@ -23,11 +23,14 @@ class TimelineEvent:
 class TestReport:
     """Aggregated report for one test."""
 
+    __test__ = False
+
     name: str
     status: str  # "passed" | "failed" | "unknown"
     message: str = ""
     error_type: str = ""
     timeline: list[TimelineEvent] = field(default_factory=list)
+    tags: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -97,6 +100,7 @@ def build_run_report(events: list[dict[str, Any]]) -> RunReport:
         report = tests[test_name]
 
         if event_type == "TestStarted":
+            report.tags = list(event.get("tags", []))
             continue
         if event_type == "TestPassed":
             report.status = "passed"

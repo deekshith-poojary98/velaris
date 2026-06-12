@@ -47,6 +47,7 @@ For each discovered test, `collect` reports:
 | source | The file it was discovered in |
 | authoring_style | Which frontend produced it — `python`, `yaml`, or `bdd` |
 | capabilities | What the test declares it needs |
+| tags | Optional classification labels associated with the test |
 
 It does **not** load configuration, look up providers, create capability
 instances, run the test body, or emit events.
@@ -101,7 +102,8 @@ velaris collect tests/ --json
     "name": "test_login",
     "authoring_style": "python",
     "source": "tests/test_login.py",
-    "capabilities": ["browser"]
+    "capabilities": ["browser"],
+    "tags": []
   }
 ]
 ```

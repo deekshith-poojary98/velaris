@@ -41,6 +41,7 @@ class BddAdapter:
                     name=scenario.name,
                     capabilities=capabilities,
                     callable=callable_obj,
+                    tags=list(scenario.tags),
                 )
             )
         return specs

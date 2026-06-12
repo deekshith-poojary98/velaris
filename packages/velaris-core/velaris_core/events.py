@@ -19,6 +19,8 @@ class TestStarted:
     __test__ = False
 
     name: str
+    tags: list[str] = field(default_factory=list)
+
 
 
 @dataclass(frozen=True)

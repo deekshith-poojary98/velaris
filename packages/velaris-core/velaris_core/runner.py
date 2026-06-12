@@ -34,6 +34,7 @@ def run(
     reporters: list[Reporter] | None = None,
     json_log: str | Path | None = None,
     output_mode: OutputMode = OutputMode.DEFAULT,
+    tags: list[str] | None = None,
 ) -> RunResult:
     started = time.monotonic()
     active_reporters: list[Reporter] = [StdoutReporter(mode=output_mode)]
@@ -51,6 +52,9 @@ def run(
         emit(EventEnvelope(test=test_name, event=event))
 
     tests = collect(paths)
+    if tags:
+        tests = [t for t in tests if any(tag in t.tags for tag in tags)]
+
     config = load_config(config_path)
     bindings = apply_bootstrap_conventions(config.bindings)
 
@@ -59,7 +63,7 @@ def run(
 
     result = RunResult()
     for spec in tests:
-        emit_for_test(spec.name, TestStarted(spec.name))
+        emit_for_test(spec.name, TestStarted(spec.name, tags=list(spec.tags)))
         resolver = Resolver(
             registry,
             bindings,

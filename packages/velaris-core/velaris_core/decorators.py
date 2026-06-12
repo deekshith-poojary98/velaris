@@ -16,15 +16,15 @@ def test(func: F) -> F: ...
 
 
 @overload
-def test(*capabilities: str) -> Callable[[F], F]: ...
+def test(*capabilities: str, tags: list[str] | None = None) -> Callable[[F], F]: ...
 
 
-def test(*capabilities: str | F) -> F | Callable[[F], F]:
-    """Mark a function as a Velaris test and declare required capabilities.
+def test(*capabilities: str | F, tags: list[str] | None = None) -> F | Callable[[F], F]:
+    """Mark a function as a Velaris test and declare required capabilities and tags.
 
     Explicit declaration (recommended)::
 
-        @test("api", "secrets")
+        @test("api", "secrets", tags=["smoke"])
         def test_checkout(api, secrets): ...
 
     Bare decorator infers capabilities from parameter names (in signature order)::
@@ -32,20 +32,32 @@ def test(*capabilities: str | F) -> F | Callable[[F], F]:
         @test
         def test_users(api): ...
     """
-    if len(capabilities) == 1 and callable(capabilities[0]):
+    if len(capabilities) == 1 and callable(capabilities[0]) and tags is None:
         func = capabilities[0]
         caps = _capabilities_from_params(func)
         _validate_capabilities(func, caps)
         func.__velaris_test__ = True  # type: ignore[attr-defined]
         func.__velaris_capabilities__ = caps  # type: ignore[attr-defined]
+        func.__velaris_tags__ = []  # type: ignore[attr-defined]
         return func
 
     cap_list = [str(cap) for cap in capabilities]
+    actual_tags = tags if tags is not None else []
+
+    from velaris_core.testspec import _validate_tags
+    _validate_tags(None, actual_tags)
 
     def decorator(func: F) -> F:
-        _validate_capabilities(func, cap_list)
+        nonlocal cap_list
+        if not cap_list:
+            caps = _capabilities_from_params(func)
+        else:
+            caps = cap_list
+        _validate_capabilities(func, caps)
+        _validate_tags(func.__name__, actual_tags)
         func.__velaris_test__ = True  # type: ignore[attr-defined]
-        func.__velaris_capabilities__ = cap_list  # type: ignore[attr-defined]
+        func.__velaris_capabilities__ = caps  # type: ignore[attr-defined]
+        func.__velaris_tags__ = actual_tags  # type: ignore[attr-defined]
         return func
 
     return decorator

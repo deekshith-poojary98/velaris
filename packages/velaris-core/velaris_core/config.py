@@ -115,12 +115,26 @@ def _validate_provider(capability_id: str, provider: str) -> None:
     known = KNOWN_PROVIDERS.get(capability_id)
     if known is None:
         return
-    if provider not in known:
-        available = ", ".join(sorted(known)) or "(none)"
-        raise UnknownProviderError(
-            f"Unknown provider {provider!r} for capability {capability_id!r}.\n"
-            f"  Known providers: {available}"
-        )
+    if provider in known:
+        return
+
+    try:
+        from velaris_core.bootstrap import register_builtin_providers
+        from velaris_core.registry import Registry
+
+        registry = Registry()
+        register_builtin_providers(registry)
+        providers = registry.list_providers(capability_id)
+        if provider in providers:
+            return
+    except Exception:
+        pass
+
+    available = ", ".join(sorted(known)) or "(none)"
+    raise UnknownProviderError(
+        f"Unknown provider {provider!r} for capability {capability_id!r}.\n"
+        f"  Known providers: {available}"
+    )
 
 
 def _read_toml(path: Path) -> dict[str, Any]:

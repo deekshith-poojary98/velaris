@@ -72,6 +72,63 @@ class _FakeBrowser:
     def close(self) -> None:
         pass
 
+    def check(self, selector: str) -> None:
+        pass
+
+    def uncheck(self, selector: str) -> None:
+        pass
+
+    def select_option(self, selector: str, value: str) -> None:
+        pass
+
+    def hover(self, selector: str) -> None:
+        pass
+
+    def press_key(self, selector: str, key: str) -> None:
+        pass
+
+    def drag_and_drop(self, source: str, target: str) -> None:
+        pass
+
+    def switch_to_frame(self, selector: str) -> None:
+        pass
+
+    def switch_to_main_frame(self) -> None:
+        pass
+
+    def switch_to_tab(self, index: int) -> None:
+        pass
+
+    def accept_alert(self) -> None:
+        pass
+
+    def dismiss_alert(self) -> None:
+        pass
+
+    def alert_text(self) -> str:
+        return ""
+
+    def text_content(self, selector: str) -> str:
+        return ""
+
+    def value(self, selector: str) -> str:
+        return ""
+
+    def is_visible(self, selector: str) -> bool:
+        return True
+
+    def is_enabled(self, selector: str) -> bool:
+        return True
+
+    def is_checked(self, selector: str) -> bool:
+        return True
+
+    def wait_for_selector(self, selector: str, state: str = "visible") -> None:
+        pass
+
+    def screenshot(self, path: str) -> None:
+        pass
+
 
 def test_secrets_protocol() -> None:
     assert isinstance(_FakeSecrets(), Secrets)

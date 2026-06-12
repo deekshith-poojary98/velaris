@@ -30,3 +30,25 @@ class TestSpec:
     name: str
     capabilities: list[str]
     callable: Callable[..., Any] = field(default=noop_test)
+    tags: list[str] = field(default_factory=list)
+
+
+def _validate_tags(name: str | None, tags: Any) -> None:
+    """Validate that tags is a list of non-empty unique strings."""
+    from velaris_core.errors import CollectionError
+
+    if not isinstance(tags, list):
+        raise CollectionError(f"Tags must be a list, got {type(tags).__name__}.")
+    
+    seen = set()
+    for tag in tags:
+        if not isinstance(tag, str):
+            raise CollectionError(f"Tags must be strings, got {type(tag).__name__}.")
+        if not tag:
+            test_desc = f" {name!r}" if name else ""
+            raise CollectionError(f"Test{test_desc} tag cannot be empty string.")
+        if tag in seen:
+            test_desc = f" {name!r}" if name else ""
+            raise CollectionError(f"Duplicate tag {tag!r} in test{test_desc}.")
+        seen.add(tag)
+

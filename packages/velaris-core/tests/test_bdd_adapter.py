@@ -68,7 +68,7 @@ def test_bdd_rejects_unsupported_gherkin(tmp_path: Path) -> None:
     feature = tmp_path / "bad.feature"
     feature.write_text(
         "Feature: Login\n\n"
-        "@browser\n"
+        "Unsupported line here\n"
         "Scenario: User logs in\n\n"
         '  Given browser.open("/login")\n',
         encoding="utf-8",

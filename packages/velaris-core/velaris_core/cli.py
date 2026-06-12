@@ -63,6 +63,12 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Show all events including capability observations",
     )
+    run_parser.add_argument(
+        "--tag",
+        action="append",
+        default=None,
+        help="Run tests matching this tag (can be specified multiple times for OR behavior)",
+    )
 
     collect_parser = subparsers.add_parser(
         "collect",
@@ -78,6 +84,12 @@ def main(argv: list[str] | None = None) -> int:
         "--json",
         action="store_true",
         help="Emit collected tests as a JSON array instead of a tree",
+    )
+    collect_parser.add_argument(
+        "--tag",
+        action="append",
+        default=None,
+        help="Filter collected tests matching this tag (can be specified multiple times for OR behavior)",
     )
 
     capabilities_parser = subparsers.add_parser(
@@ -167,6 +179,7 @@ def main(argv: list[str] | None = None) -> int:
             config_path=args.config,
             json_log=json_log,
             output_mode=output_mode,
+            tags=args.tag,
         )
 
         if html_report is not None:
@@ -177,7 +190,7 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "collect":
         try:
-            tests = discover(args.paths)
+            tests = discover(args.paths, tags=args.tag)
         except CollectionError as exc:
             print(f"CollectionError:\n{exc}", file=sys.stderr)
             return 1

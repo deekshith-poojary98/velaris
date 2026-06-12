@@ -57,10 +57,21 @@ class YamlAdapter:
                 )
         capabilities = [c.strip() for c in capabilities]
 
+        tags_raw = raw.get("tags")
+        if tags_raw is not None:
+            from velaris_core.testspec import _validate_tags
+            try:
+                _validate_tags(name, tags_raw)
+            except CollectionError as exc:
+                raise CollectionError(f"{path}: {exc}") from exc
+            tags = tags_raw
+        else:
+            tags = []
+
         callable_obj = self._compile_actions(raw.get("actions"), name, capabilities, path)
         if callable_obj is None:
-            return [TestSpec(name=name, capabilities=capabilities)]
-        return [TestSpec(name=name, capabilities=capabilities, callable=callable_obj)]
+            return [TestSpec(name=name, capabilities=capabilities, tags=tags)]
+        return [TestSpec(name=name, capabilities=capabilities, callable=callable_obj, tags=tags)]
 
     @staticmethod
     def _compile_actions(

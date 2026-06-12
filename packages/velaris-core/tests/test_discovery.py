@@ -83,6 +83,7 @@ def test_to_json_is_stable_array() -> None:
             "authoring_style": "python",
             "source": "tests/test_login.py",
             "capabilities": ["browser"],
+            "tags": [],
         }
     ]
 

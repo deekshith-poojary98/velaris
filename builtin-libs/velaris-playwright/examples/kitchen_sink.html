@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browser Contract Kitchen Sink</title>
+</head>
+<body>
+    <h1>Browser Contract Kitchen Sink</h1>
+
+    <h2>Checkbox & Radio</h2>
+    <input type="checkbox" id="my-checkbox"> checkbox label<br>
+    <input type="radio" id="my-radio" name="radios" value="option1"> radio label
+
+    <h2>Dropdown Select</h2>
+    <select id="my-dropdown">
+        <option value="val1">Option 1</option>
+        <option value="val2">Option 2</option>
+    </select>
+
+    <h2>IFrame</h2>
+    <iframe id="my-iframe" srcdoc="<html><body><h1 id='frame-title'>Inside Frame</h1><input id='frame-input' value='initial-frame-value'><button id='frame-btn' onclick='document.getElementById(&quot;frame-title&quot;).innerText = &quot;Frame Btn Clicked&quot;'>Frame Click</button></body></html>"></iframe>
+
+    <h2>Alerts & Confirms</h2>
+    <button id="alert-btn" onclick="alert('This is an alert!')">Trigger Alert</button>
+    <button id="confirm-btn" onclick="confirm('Are you sure?')">Trigger Confirm</button>
+
+    <h2>Drag and Drop</h2>
+    <div id="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text', 'source')" style="width: 50px; height: 50px; background: red;">Drag</div>
+    <div id="drop-target" ondragover="event.preventDefault()" ondrop="event.preventDefault(); this.innerText = 'Dropped!';" style="width: 100px; height: 100px; background: blue;">Target</div>
+
+    <h2>Multi-tab</h2>
+    <a id="new-tab-link" href="#" onclick="window.open('kitchen_sink.html', '_blank'); return false;">Open new tab</a>
+
+    <h2>Hover & Keypress</h2>
+    <div id="hover-div" onmouseenter="this.innerText = 'Hovered!'" onmouseleave="this.innerText = 'Not Hovered'" style="width: 100px; height: 50px; background: yellow;">Not Hovered</div>
+    <input id="key-input" onkeydown="document.getElementById('key-status').innerText = 'Pressed:' + event.key;">
+    <span id="key-status">None</span>
+
+    <h2>States & Visibility</h2>
+    <div id="visible-div">I am visible</div>
+    <div id="hidden-div" style="display: none;">I am hidden</div>
+    <button id="disable-btn" disabled>Disabled</button>
+    <button id="enable-btn">Enabled</button>
+</body>
+</html>

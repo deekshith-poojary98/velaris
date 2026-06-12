@@ -83,7 +83,8 @@ class PythonAdapter:
             if not getattr(obj, "__velaris_test__", False):
                 continue
             capabilities = list(getattr(obj, "__velaris_capabilities__", []))
-            specs.append(TestSpec(name=name, capabilities=capabilities, callable=obj))
+            tags = list(getattr(obj, "__velaris_tags__", []))
+            specs.append(TestSpec(name=name, capabilities=capabilities, callable=obj, tags=tags))
         return specs
 ```
 
@@ -102,8 +103,8 @@ class YamlAdapter:
 
     def collect(self, path: Path) -> list[TestSpec]:
         raw = yaml.safe_load(path.read_text())
-        # validate name + capabilities ...
-        return [TestSpec(name=raw["name"], capabilities=raw["capabilities"])]
+        # validate name, capabilities, and tags ...
+        return [TestSpec(name=raw["name"], capabilities=raw["capabilities"], tags=raw.get("tags", []))]
 ```
 
 The resulting TestSpec uses the default **no-op body** (`noop_test`). The runner
@@ -117,6 +118,7 @@ class TestSpec:
     name: str
     capabilities: list[str]
     callable: Callable[..., Any] = field(default=noop_test)
+    tags: list[str] = field(default_factory=list)
 ```
 
 This is the **only** change to the execution boundary. The runner code is byte

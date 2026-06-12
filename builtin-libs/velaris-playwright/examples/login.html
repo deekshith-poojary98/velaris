@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mock Login Page</title>
+</head>
+<body>
+    <h1>Login Portal</h1>
+    <form id="login-form" onsubmit="event.preventDefault(); document.getElementById('status').innerText = 'Welcome ' + document.getElementById('username').value + '!';">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        <button type="submit" id="submit">Submit</button>
+    </form>
+    <p id="status">Please log in.</p>
+</body>
+</html>
